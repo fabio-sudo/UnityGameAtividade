@@ -1,4 +1,6 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BallController : MonoBehaviour
 {
@@ -10,6 +12,17 @@ public class BallController : MonoBehaviour
 
     private AudioSource audioSource; // Referência ao componente de áudio
 
+
+    //Game Over
+    public TextMeshProUGUI texto;
+    public Button botao;
+
+
+
+    private void Update()
+    {
+        ForaDaArea();
+    }
 
     void Start()
     {
@@ -45,4 +58,32 @@ public class BallController : MonoBehaviour
         }
     }
 
-}
+
+    private void ForaDaArea()
+    {
+        // Obtém a posição X do GameObject
+        float posicaoX = transform.position.x;
+
+        // Condição para verificar se está em -9 ou 9
+        if (posicaoX <= -13)
+        {
+            texto.text = "Game Over!"; // Define o texto como Game Over
+
+            // Ativa o texto e o botão
+            texto.gameObject.SetActive(true);
+            botao.gameObject.SetActive(true);
+        }
+        else if (posicaoX >= 13)
+        {
+            texto.text = "Win!"; // Define o texto como Win
+
+            // Ativa o texto e o botão
+            texto.gameObject.SetActive(true);
+            botao.gameObject.SetActive(true);
+        }
+    }
+
+
+
+
+    }

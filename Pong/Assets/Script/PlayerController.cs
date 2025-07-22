@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -35,39 +36,55 @@ public class PlayerController : MonoBehaviour
 
         transform.position = minhaPosicao;  // Define a nova posição da raquete
 
-        if (automatico == false) {
+        if (automatico == false)
+        {
+
 
             if (Player)
             {
-                if (Player)
+                if (Keyboard.current.upArrowKey.isPressed && meuY < limit)
                 {
-                    if (Keyboard.current.upArrowKey.isPressed && meuY < limit)
-                    {
-                        meuY += deltaVelocidade;
-                    }
-                    if (Keyboard.current.downArrowKey.isPressed && meuY > -limit)
-                    {
-                        meuY -= deltaVelocidade;
-                    }
+                    meuY += deltaVelocidade;
                 }
-                else
+                if (Keyboard.current.downArrowKey.isPressed && meuY > -limit)
                 {
-                    if (Keyboard.current.wKey.isPressed && meuY < limit)
-                    {
-                        meuY += deltaVelocidade;
-                    }
-                    if (Keyboard.current.sKey.isPressed && meuY > -limit)
-                    {
-                        meuY -= deltaVelocidade;
-                    }
+                    meuY -= deltaVelocidade;
                 }
-
-
+            }
+            else
+            {
+                if (Keyboard.current.wKey.isPressed && meuY < limit)
+                {
+                    meuY += deltaVelocidade;
+                }
+                if (Keyboard.current.sKey.isPressed && meuY > -limit)
+                {
+                    meuY -= deltaVelocidade;
+                }
             }
 
 
 
+
         }
+        else {
+
+            // IA segue a bola automaticamente no eixo Y
+            if (bola != null)
+            {
+                float direcao = Mathf.Sign(bola.position.y - meuY); // +1 ou -1 dependendo da posição da bola
+                meuY += direcao * deltaVelocidade;
+
+                // Limitar a raquete dentro dos limites da tela
+                meuY = Mathf.Clamp(meuY, -limit, limit);
+
+                minhaPosicao.y = meuY;
+                transform.position = minhaPosicao;
+            }
+
+        }
+
+        
 
     }
 }
